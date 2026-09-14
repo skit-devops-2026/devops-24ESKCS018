@@ -1,0 +1,24 @@
+{
+  "name": "placementmanagement",
+  "version": "1.0.0",
+  "description": "| Roll No.   | Name               | GitHub username |\r | ---------- | ------------------ | --------------- |\r | 24ESKCS010 | Abhay Kumar Sharma | 3005Abhay3005   |",
+  "main": "utils.js",
+  "directories": {
+    "doc": "docs",
+    "test": "tests"
+  },
+  "scripts": {
+    "test":  "node --test tests/utils.test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/skit-devops-2026/devops-24ESKCS010.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/skit-devops-2026/devops-24ESKCS010/issues"
+  },
+  "homepage": "https://github.com/skit-devops-2026/devops-24ESKCS010#readme"
+}

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign In — PlacementHub</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="js/app.js"></script>
+</head>
+<body>
+
+  <div class="auth-page">
+    <div class="auth-card">
+      <a href="index.html" class="logo" style="margin-bottom: 1.5rem; display: inline-flex;">
+        <div class="logo-icon">
+          <svg viewBox="0 0 20 20"><path d="M10 2L2 6v8l8 4 8-4V6L10 2zm0 2.24L16 7.5 10 10.76 4 7.5l6-3.26zM3.5 9.08l5.75 3.13V17.5L3.5 14.42V9.08zm7.25 3.13L16.5 9.08v5.34L10.75 17.5v-5.29z"/></svg>
+        </div>
+        <span class="logo-name">PlacementHub</span>
+      </a>
+
+      <h2>Welcome back</h2>
+      <p class="auth-sub">Signing in as <strong id="role-title-label">Student</strong></p>
+
+      <div id="login-alert" class="alert alert-error" style="display: none;"></div>
+
+      <form id="login-form">
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" id="email" required placeholder="you@example.com">
+        </div>
+
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" id="password" required placeholder="Enter your password">
+        </div>
+
+        <button class="btn btn-solid btn-full" type="submit" id="btn-login-submit" style="margin-top: 0.5rem;">
+          Sign In
+        </button>
+      </form>
+
+      <!-- Instant Demo Login Button -->
+      <div style="margin-top: 1rem; text-align: center;">
+        <button type="button" id="btn-demo-login" class="btn btn-accent btn-full">
+          🚀 Instant Demo Login as <span id="demo-role-text">Student</span>
+        </button>
+      </div>
+
+      <div class="auth-switch">
+        Don't have an account? <a href="register.html">Sign up</a>
+      </div>
+
+      <hr class="divider">
+      <div style="display: flex; gap: 0.5rem; justify-content: center;" id="role-switcher">
+        <a href="login.html?role=student" class="btn btn-ghost btn-sm" data-role="student">Student</a>
+        <a href="login.html?role=recruiter" class="btn btn-ghost btn-sm" data-role="recruiter">Recruiter</a>
+        <a href="login.html?role=institute" class="btn btn-ghost btn-sm" data-role="institute">Institute</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    $(document).ready(function () {
+      const urlParams = new URLSearchParams(window.location.search);
+      const roleParam = urlParams.get('role') || 'student';
+
+      const roleLabels = {
+        student: 'Student',
+        recruiter: 'Recruiter (Company)',
+        institute: 'Institute Admin'
+      };
+
+      $('#role-title-label').text(roleLabels[roleParam] || 'User');
+      $('#demo-role-text').text(roleLabels[roleParam] || 'User');
+
+      // Highlight active role button
+      $(`#role-switcher a[data-role="${roleParam}"]`).css({
+        'border-color': 'var(--accent)',
+        'font-weight': '600'
+      });
+
+      // Instant Demo Login handler
+      $('#btn-demo-login').on('click', function () {
+        const demoUser = {
+          id: 'demo-' + roleParam + '-id',
+          name: roleParam.charAt(0).toUpperCase() + roleParam.slice(1) + ' User',
+          email: roleParam + '@placementhub.demo',
+          role: roleParam
+        };
+        setAuthUser(demoUser);
+        window.location.href = roleParam + '.html';
+      });
+
+      $('#login-form').on('submit', function (e) {
+        e.preventDefault();
+        const $alert = $('#login-alert').hide().text('');
+        const $btn = $('#btn-login-submit').prop('disabled', true).html('<span class="spinner"></span>');
+
+        const email = $('#email').val().trim();
+        const password = $('#password').val();
+
+        apiCall({
+          url: '/auth/login',
+          method: 'POST',
+          data: { email, password }
+        })
+        .done(function (res) {
+          setAuthUser(res.user);
+          window.location.href = res.user.role + '.html';
+        })
+        .fail(function (xhr) {
+          const msg = xhr.responseJSON?.message || 'Login failed. Please try again or use Instant Demo Login.';
+          $alert.text(msg).show();
+        })
+        .always(function () {
+          $btn.prop('disabled', false).text('Sign In');
+        });
+      });
+    });
+  </script>
+
+</body>
+</html>

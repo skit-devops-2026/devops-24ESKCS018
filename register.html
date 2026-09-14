@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Account — PlacementHub</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="js/app.js"></script>
+</head>
+<body>
+
+  <div class="auth-page">
+    <div class="auth-card" style="max-width: 460px;">
+      <a href="index.html" class="logo" style="margin-bottom: 1.5rem; display: inline-flex;">
+        <div class="logo-icon">
+          <svg viewBox="0 0 20 20"><path d="M10 2L2 6v8l8 4 8-4V6L10 2zm0 2.24L16 7.5 10 10.76 4 7.5l6-3.26zM3.5 9.08l5.75 3.13V17.5L3.5 14.42V9.08zm7.25 3.13L16.5 9.08v5.34L10.75 17.5v-5.29z"/></svg>
+        </div>
+        <span class="logo-name">PlacementHub</span>
+      </a>
+
+      <h2>Create account</h2>
+      <p class="auth-sub">Join PlacementHub — it's free</p>
+
+      <!-- Role selector buttons -->
+      <div class="role-selector">
+        <button type="button" class="role-btn selected" data-role="student">
+          <span>🎓</span> Student
+        </button>
+        <button type="button" class="role-btn" data-role="recruiter">
+          <span>💼</span> Recruiter
+        </button>
+        <button type="button" class="role-btn" data-role="institute">
+          <span>🏫</span> Institute
+        </button>
+      </div>
+
+      <div id="register-alert" class="alert alert-error" style="display: none;"></div>
+
+      <form id="register-form">
+        <div class="form-group">
+          <label>Full Name <span class="req">*</span></label>
+          <input type="text" id="name" required placeholder="Your full name">
+        </div>
+
+        <div class="form-group">
+          <label>Email Address <span class="req">*</span></label>
+          <input type="email" id="email" required placeholder="you@example.com">
+        </div>
+
+        <div class="form-group">
+          <label>Password <span class="req">*</span></label>
+          <input type="password" id="password" required placeholder="Min. 6 characters">
+        </div>
+
+        <!-- Student Field -->
+        <div class="form-group role-field" id="field-student">
+          <label>University Roll Number <span class="req">*</span></label>
+          <input type="text" id="rollNumber" placeholder="e.g. 24CSKXXXX" style="text-transform: uppercase;">
+          <p class="form-hint">Your unique roll number assigned by the university. Used to identify you on the portal.</p>
+        </div>
+
+        <!-- Recruiter Field -->
+        <div class="form-group role-field" id="field-recruiter" style="display: none;">
+          <label>Company Name <span class="req">*</span></label>
+          <input type="text" id="companyName" placeholder="Your company name">
+          <p class="form-hint">Your account will be reviewed and approved by the institute before you can post opportunities.</p>
+        </div>
+
+        <!-- Institute Notice -->
+        <div class="alert alert-info role-field" id="field-institute" style="display: none; margin-bottom: 1rem;">
+          Institute accounts manage the entire portal — student records, recruiter approvals, and placement stats.
+        </div>
+
+        <button class="btn btn-solid btn-full" type="submit" id="btn-register-submit" style="margin-top: 0.5rem;">
+          Create Account
+        </button>
+      </form>
+
+      <div class="auth-switch">
+        Already have an account? <a href="login.html">Sign in</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    $(document).ready(function () {
+      redirectIfLoggedIn();
+
+      let currentRole = 'student';
+
+      $('.role-btn').on('click', function () {
+        $('.role-btn').removeClass('selected');
+        $(this).addClass('selected');
+        currentRole = $(this).attr('data-role');
+
+        $('.role-field').hide();
+        $(`#field-${currentRole}`).show();
+      });
+
+      $('#register-form').on('submit', function (e) {
+        e.preventDefault();
+        const $alert = $('#register-alert').hide().text('');
+        
+        const name = $('#name').val().trim();
+        const email = $('#email').val().trim();
+        const password = $('#password').val();
+        const rollNumber = $('#rollNumber').val().trim().toUpperCase();
+        const companyName = $('#companyName').val().trim();
+
+        if (password.length < 6) {
+          $alert.text('Password must be at least 6 characters.').show();
+          return;
+        }
+
+        if (currentRole === 'student' && !rollNumber) {
+          $alert.text('University Roll Number is required for students.').show();
+          return;
+        }
+
+        if (currentRole === 'recruiter' && !companyName) {
+          $alert.text('Company Name is required for recruiters.').show();
+          return;
+        }
+
+        const $btn = $('#btn-register-submit').prop('disabled', true).html('<span class="spinner"></span>');
+
+        apiCall({
+          url: '/auth/register',
+          method: 'POST',
+          data: {
+            name,
+            email,
+            password,
+            role: currentRole,
+            rollNumber: currentRole === 'student' ? rollNumber : undefined,
+            companyName: currentRole === 'recruiter' ? companyName : undefined
+          }
+        })
+        .done(function (res) {
+          setAuthUser(res.user);
+          window.location.href = res.user.role + '.html';
+        })
+        .fail(function (xhr) {
+          const msg = xhr.responseJSON?.message || 'Registration failed. Please try again.';
+          $alert.text(msg).show();
+        })
+        .always(function () {
+          $btn.prop('disabled', false).text('Create Account');
+        });
+      });
+    });
+  </script>
+
+</body>
+</html>
