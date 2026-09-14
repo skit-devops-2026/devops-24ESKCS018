@@ -33,3 +33,12 @@ coverage/
 .idea/
 .DS_Store
 Thumbs.db
+
+
+node_modules/
+dist/
+build/
+.env
+.DS_Store
+coverage/
+*.log
