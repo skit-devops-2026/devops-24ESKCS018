@@ -2,9 +2,9 @@
 
 ## Author
 
-| Roll No.   | Name               | GitHub username |
-| ---------- | ------------------ | --------------- |
-| 24ESKCS010 | Abhay Kumar Sharma | 3005Abhay3005   |
+| Roll No. | Name | GitHub username |
+|---|---|---|
+| 24ESKCS018 | Aditi Yadav | Aditiiydv |
 
 ## About
 
@@ -14,30 +14,26 @@ The current version contains the frontend implementation developed for the FSD L
 
 ## Tech stack
 
-* Frontend: HTML, CSS, JavaScript, jQuery
-* Backend: Planned — Node.js and Express
-* Database: Planned — MongoDB
+- Frontend: HTML, CSS, JavaScript, jQuery
+- Backend: Planned — Node.js and Express
+- Database: Planned — MongoDB
 
 ## Running locally
 
+1. Open `login.html` or `register.html` directly in any standard web browser to use the client interface.
+2. To run automated tests and verify utility helper functions:
+
 ```bash
-make install
-make run
+npm install
+npm test
 ```
 
 ## Live URL
 
-Add once M5 is done. Until then, leave as is.
+Add once deployment is completed.
 
 ## Health endpoint
 
-`GET /health` returns the running commit SHA. See `Makefile` and the milestone sheet for why this is required.
+GET /health returns the running commit SHA.
 
-## Development
-Project documentation is updated as the application evolves.
-
-## Project Status
-The frontend implementation is currently under development, with backend integration planned for future development.
-
-## Development Notes
-The project is being developed incrementally, with version control and CI practices maintained throughout development.
+*(Planned: The `/health` telemetry endpoint will be implemented as part of the backend service in future milestones).*
