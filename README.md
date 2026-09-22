@@ -39,3 +39,5 @@ GET /health returns the running commit SHA.
 *(Planned: The `/health` telemetry endpoint will be implemented as part of the backend service in future milestones).*
 
 ## M2 Branching and Pull Request Practice
+
+## M2 Pull Request Workflow
