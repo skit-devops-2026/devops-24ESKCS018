@@ -41,3 +41,5 @@ GET /health returns the running commit SHA.
 ## M2 Branching and Pull Request Practice
 
 ## M2 Pull Request Workflow
+
+## M2 Collaboration and Review
