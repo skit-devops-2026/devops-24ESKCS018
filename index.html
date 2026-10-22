@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="PlacementHub - Campus Placement & Internship Management System">
+  <title>PlacementHub — Campus Placement Portal</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="js/app.js"></script>
+</head>
+<body>
+
+  <header>
+    <a href="index.html" class="logo">
+      <div class="logo-icon">
+        <svg viewBox="0 0 20 20"><path d="M10 2L2 6v8l8 4 8-4V6L10 2zm0 2.24L16 7.5 10 10.76 4 7.5l6-3.26zM3.5 9.08l5.75 3.13V17.5L3.5 14.42V9.08zm7.25 3.13L16.5 9.08v5.34L10.75 17.5v-5.29z"/></svg>
+      </div>
+      <span class="logo-name">PlacementHub</span>
+    </a>
+    <div class="actions">
+      <a href="login.html" class="btn btn-ghost">Sign In</a>
+      <a href="register.html" class="btn btn-solid">Register</a>
+    </div>
+  </header>
+
+  <main style="max-width: 1000px; margin: 3rem auto; padding: 0 1.5rem;">
+    <div style="text-align: center; margin-bottom: 3rem;">
+      <h1 style="font-family: 'Syne', sans-serif; font-size: 2.75rem; font-weight: 700; margin-bottom: 1rem; color: var(--ink);">
+        Campus Placement & Internship Management
+      </h1>
+      <p style="font-size: 1.15rem; color: var(--muted); max-width: 650px; margin: 0 auto 2rem;">
+        Streamlining the recruitment process for students, company recruiters, and the college placement cell.
+      </p>
+      <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+        <a href="login.html" class="btn btn-solid btn-lg" style="padding: 0.85rem 2rem; font-size: 1.05rem;">Access Portal</a>
+        <a href="login.html?role=student" class="btn btn-ghost btn-lg" style="padding: 0.85rem 1.75rem; font-size: 1.05rem;">Student Portal</a>
+        <a href="login.html?role=recruiter" class="btn btn-ghost btn-lg" style="padding: 0.85rem 1.75rem; font-size: 1.05rem;">Recruiter Portal</a>
+      </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 2rem;">
+      <div class="card" style="padding: 1.75rem; background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm);">
+        <h3 style="margin-bottom: 0.5rem; color: var(--accent);">🎓 For Students</h3>
+        <p style="color: var(--muted); font-size: 0.95rem;">
+          Explore verified internship and full-time placement opportunities tailored to your branch and eligibility criteria.
+        </p>
+      </div>
+      <div class="card" style="padding: 1.75rem; background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm);">
+        <h3 style="margin-bottom: 0.5rem; color: var(--accent);">🏢 For Recruiters</h3>
+        <p style="color: var(--muted); font-size: 0.95rem;">
+          Post opportunities, review verified student profiles, schedule interviews, and announce selections efficiently.
+        </p>
+      </div>
+      <div class="card" style="padding: 1.75rem; background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm);">
+        <h3 style="margin-bottom: 0.5rem; color: var(--accent);">🏛️ For Placement Cell</h3>
+        <p style="color: var(--muted); font-size: 0.95rem;">
+          Real-time analytics on placement percentages, recruiter registrations, applicant tracking, and telemetry monitoring.
+        </p>
+      </div>
+    </div>
+
+    <!-- Live Telemetry Status Banner -->
+    <div style="margin-top: 3rem; padding: 1.25rem; background: var(--accent-light); border: 1px solid var(--border); border-radius: var(--radius-md); text-align: center;">
+      <p style="font-weight: 600; color: var(--ink); margin-bottom: 0.5rem;">
+        ⚡ System Status & Telemetry Endpoints
+      </p>
+      <div style="display: flex; justify-content: center; gap: 1.5rem; font-size: 0.9rem;">
+        <span>Health Status: <a href="health" style="color: var(--accent); font-weight: 600;">/health</a></span>
+        <span>Prometheus Metrics: <a href="metrics" style="color: var(--accent); font-weight: 600;">/metrics</a></span>
+      </div>
+    </div>
+  </main>
+
+  <footer style="text-align: center; padding: 2rem 1rem; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.875rem; margin-top: 4rem;">
+    <p>PlacementHub &copy; 2026 B.Tech DevOps | Roll No. 24ESKCS018 (Aditi Yadav)</p>
+  </footer>
+
+</body>
+</html>
