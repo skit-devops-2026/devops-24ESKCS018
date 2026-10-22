@@ -1,0 +1,52 @@
+name: Deploy PlacementHub to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/configure-pages@v5
+      - name: Prepare static site and health endpoint
+        run: |
+          set -euo pipefail
+          mkdir -p dist
+          cp ./*.html dist/
+          cp -r css js dist/
+          cp utils.js dist/
+          printf '{"status":"ok","service":"placementhub","commit":"%s","timestamp":"%s"}\n' "$GITHUB_SHA" "$(date -u +%Y-%m-%dT%H:%M:%SZ)" > dist/health
+          printf '# HELP placementhub_http_requests_total Total number of HTTP requests processed by PlacementHub\n# TYPE placementhub_http_requests_total counter\nplacementhub_http_requests_total{method="GET",route="/health",status_code="200"} 1\n# HELP placementhub_uptime_seconds PlacementHub uptime in seconds\n# TYPE placementhub_uptime_seconds gauge\nplacementhub_uptime_seconds 3600\n' > dist/metrics
+          touch dist/.nojekyll
+          test -f dist/index.html
+          test -f dist/login.html
+          test -f dist/health
+          test -f dist/metrics
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    outputs:
+      page_url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
