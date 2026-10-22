@@ -1,0 +1,14 @@
+node_modules
+npm-debug.log
+.git
+.github
+.gitignore
+.DS_Store
+coverage
+tests
+docs
+monitoring
+k8s
+*.md
+*.sh
+bin/
