@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: placement-management
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: placement-management
+  template:
+    metadata:
+      labels:
+        app: placement-management
+    spec:
+      containers:
+        - name: placement-management
+          image: aditiiydv/placement-management:latest
+          ports:
+            - containerPort: 80
