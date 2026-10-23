@@ -1,0 +1,3 @@
+# HELP placement_app_up Whether the PlacementHub application is up
+# TYPE placement_app_up gauge
+placement_app_up 1

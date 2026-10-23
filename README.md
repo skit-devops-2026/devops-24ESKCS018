@@ -2,9 +2,9 @@
 
 ## Author
 
-| Roll No. | Name | GitHub username |
-|---|---|---|
-| 24ESKCS018 | Aditi Yadav | Aditiiydv |
+| Roll No.   | Name               | GitHub username |
+| ---------- | ------------------ | --------------- |
+| 24ESKCS018 | Aditi yadav.       | Aditiiydv       |
 
 ## About
 
@@ -14,34 +14,30 @@ The current version contains the frontend implementation developed for the FSD L
 
 ## Tech stack
 
-- Frontend: HTML, CSS, JavaScript, jQuery
-- Backend: Planned — Node.js and Express
-- Database: Planned — MongoDB
+* Frontend: HTML, CSS, JavaScript, jQuery
+* Backend: Planned — Node.js and Express
+* Database: Planned — MongoDB
 
 ## Running locally
 
-1. Open `login.html` or `register.html` directly in any standard web browser to use the client interface.
-2. To run automated tests and verify utility helper functions:
-
 ```bash
-npm install
-npm test
+make install
+make run
 ```
 
 ## Live URL
 
-Add once deployment is completed.
+https://placement-management-latest.onrender.com
 
 ## Health endpoint
 
-GET /health returns the running commit SHA.
+`GET /health` returns the running commit SHA. See `Makefile` and the milestone sheet for why this is required.
 
-*(Planned: The `/health` telemetry endpoint will be implemented as part of the backend service in future milestones).*
+## Development
+Project documentation is updated as the application evolves.
 
-## M2 Branching and Pull Request Practice
+## Project Status
+The frontend implementation is currently under development, with backend integration planned for future development.
 
-## M2 Pull Request Workflow
-
-## M2 Collaboration and Review
-
-## M2 Final Review and Merge
+## Development Notes
+The project is being developed incrementally, with version control and CI practices maintained throughout development.
